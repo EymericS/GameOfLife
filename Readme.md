@@ -18,7 +18,4 @@
     <li>
         <a href="https://www.youtube.com/playlist?list=PLCKf4WHHB2LWxL51HTNBz2OcbpswDnXy6" title="link to tutorial youtube playlist">Tutorial playlist</a>
     </li>
-    <li>
-        <a href="https://www.youtube.com/playlist?list=PLCKf4WHHB2LWxL51HTNBz2OcbpswDnXy6" title="link to tutorial youtube playlist">Tutorial playlist</a>
-    </li>
 </ul>
