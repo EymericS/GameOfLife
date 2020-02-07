@@ -3,7 +3,6 @@ package tk.workshop.learn;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -14,28 +13,22 @@ import javafx.scene.transform.NonInvertibleTransformException;
 
 public class MainView extends VBox {
 
-    private Button stepButton;
     private Canvas canvas;
     private Affine affine;
 
     private Simulation simulation;
 
-    private int drawMode = 1;
+    private int drawMode = Simulation.ALIVE;
 
     public MainView() {
-        this.stepButton = new Button("step");
-        this.stepButton.setOnAction(actionEvent -> {
-            this.simulation.step();
-            this.draw();
-        });
-
         this.canvas = new Canvas(400, 400);
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
 
         this.setOnKeyPressed(this::onKeyPressed);
 
-        this.getChildren().addAll(this.stepButton, this.canvas);
+        Toolbar toolbar = new Toolbar(this);
+        this.getChildren().addAll(toolbar, canvas);
 
         this.affine = new Affine();
         this.affine.appendScale(400 / 10f, 400 / 10f);
@@ -45,9 +38,9 @@ public class MainView extends VBox {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.E) {
-            this.drawMode = 1;
+            this.drawMode = Simulation.ALIVE;
         } else if (keyEvent.getCode() == KeyCode.D) {
-            this.drawMode = 0;
+            this.drawMode = Simulation.DEAD;
         }
     }
 
@@ -78,7 +71,7 @@ public class MainView extends VBox {
         g.setFill(Color.BLACK);
         for (int x = 0; x < this.simulation.width; x++) {
             for (int y = 0; y < this.simulation.height; y++) {
-                if (this.simulation.getState(x, y) == 1) {
+                if (this.simulation.getState(x, y) == Simulation.ALIVE) {
                     g.fillRect(x, y, 1, 1);
                 }
             }
@@ -92,5 +85,13 @@ public class MainView extends VBox {
         for (int y = 0; y <= this.simulation.height; y++) {
             g.strokeLine(0, y, 10, y);
         }
+    }
+
+    public Simulation getSimulation() {
+        return this.simulation;
+    }
+
+    public void setDrawMode(int mode) {
+        this.drawMode = mode;
     }
 }

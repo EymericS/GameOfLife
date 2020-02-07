@@ -1,6 +1,10 @@
 package tk.workshop.learn;
 
 public class Simulation {
+
+    public static int DEAD = 0;
+    public static int ALIVE = 1;
+
     int width;
     int height;
     int[][] board;
@@ -17,7 +21,7 @@ public class Simulation {
         for (int y = 0; y < height; y++) {
             String line = "|";
             for (int x = 0; x < width; x++) {
-                if (this.board[x][y] == 0) {
+                if (this.board[x][y] == DEAD) {
                     line += ".";
                 } else {
                     line += "*";
@@ -42,11 +46,11 @@ public class Simulation {
     }
 
     public void setAlive(int x, int y) {
-        this.setState(x, y, 1);
+        this.setState(x, y, ALIVE);
     }
 
     public void setDead(int x, int y) {
-        this.setState(x, y, 0);
+        this.setState(x, y, DEAD);
     }
 
     public int coutAliveNeighbours(int x, int y) {
@@ -85,17 +89,17 @@ public class Simulation {
             for (int x = 0; x < width; x++) {
                 int aliveNeighbours = coutAliveNeighbours(x, y);
 
-                if (getState(x, y) == 1) {
+                if (getState(x, y) == ALIVE) {
                     if (aliveNeighbours < 2) {
-                        newBorad[x][y] = 0;
+                        newBorad[x][y] = DEAD;
                     } else if (aliveNeighbours == 2 || aliveNeighbours == 3) { // TODO : remove
-                        newBorad[x][y] = 1;
+                        newBorad[x][y] = ALIVE;
                     } else if (aliveNeighbours > 3) {
-                        newBorad[x][y] = 0;
+                        newBorad[x][y] = DEAD;
                     }
                 } else {
                     if (aliveNeighbours == 3) {
-                        newBorad[x][y] = 1;
+                        newBorad[x][y] = ALIVE;
                     }
                 }
             }
